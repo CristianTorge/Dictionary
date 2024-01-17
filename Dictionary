@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            margin: 0;
+            background-color: gray;
+        }
+
+        button {
+            margin: 5px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button.pressed {
+            background-color: lightgray;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        #buttonsContainer1,
+        #buttonsContainer2 {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <input type="text" id="insertWord" placeholder="Insert word">
+        <button id="generateBtn1">OK</button>
+        <div id="buttonsContainer1"></div>
+
+        <input type="text" id="findWord" placeholder="Find Word">
+        <button id="generateBtn2">OK</button>
+        <div id="buttonsContainer2"></div>
+    </div>
+
+    <script>
+        var savedWords = [];
+
+        function handleButtonMouseDown() {
+            this.classList.add('pressed');
+        }
+
+        function handleButtonMouseUp() {
+            this.classList.remove('pressed');
+
+            var inputElement = this.id === 'generateBtn1' ? 'insertWord' : 'findWord';
+            var inputValue = document.getElementById(inputElement).value;
+
+            if (this.id === 'generateBtn1') {
+                savedWords.push(inputValue);
+                console.log('Cuvântul introdus este: ' + inputValue);
+                console.log('Cuvinte salvate: ' + savedWords.join(', '));
+                document.getElementById('insertWord').value = '';
+            } else {
+                var isWordSaved = savedWords.includes(inputValue);
+                var message = isWordSaved ? 'The word is in the dictionary!' : 'The word is NOT in the dictionary!';
+                document.getElementById('buttonsContainer2').innerText = message;
+                document.getElementById('findWord').value = '';
+            }
+        }
+
+        document.getElementById('generateBtn1').addEventListener('mousedown', handleButtonMouseDown);
+        document.getElementById('generateBtn1').addEventListener('mouseup', handleButtonMouseUp);
+
+        document.getElementById('generateBtn2').addEventListener('mousedown', handleButtonMouseDown);
+        document.getElementById('generateBtn2').addEventListener('mouseup', handleButtonMouseUp);
+    </script>
+
+</body>
+
+</html>
